@@ -3,11 +3,12 @@ INFO 201 Group BD1's repo that will explore and gather insightful information fr
 
 
 ##Project Description
+
 Our project will be focused on analyzing data about Nobel Prize winners
 over the years. Some of the target audiences who might look at the
 visualizations we create could be current scholars who are curious about
 the qualities of a winner of a prize, or promoters of political justice
-worldwide. 
+worldwide.
 
 Questions that we would like to inform our audience based on this
 project are:
@@ -24,6 +25,7 @@ Prize.
 
 
 ##Technical Description
+
 This section of your proposal is an opportunity to think through the specific analytical steps you'll need to complete throughout the project.
 
 How will you be reading in your data (i.e., are you using an API, or is it a static .csv/.json file)?
