@@ -2,7 +2,7 @@
 INFO 201 Group BD1's repo that will explore and gather insightful information from data about Nobel Prize recipients (and their deaths).
 
 
-##Project Description
+## Project Description
 
 Our project will be focused on analyzing data about Nobel Prize winners
 over the years. Some of the target audiences who might look at the
@@ -18,13 +18,14 @@ project are:
 4. The percentage breakdown of how the awards are split
 5. People who passed away before being able to receive their prize
 
-The dataset we will be utilizing will be the NobelPrize API, because it
+The dataset we will be utilizing will be the
+[NobelPrize API](https://nobelprize.readme.io/), because it
 details a lot of specific information about each recipient of these prizes.
 This API was created by Nobelprize.org, the Official Website of the Nobel
 Prize.
 
 
-##Technical Description
+## Technical Description
 
 This section of your proposal is an opportunity to think through the specific analytical steps you'll need to complete throughout the project.
 
