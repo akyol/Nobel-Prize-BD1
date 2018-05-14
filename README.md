@@ -17,6 +17,7 @@ project are:
 3. The number of prizes awarded for each category
 4. The percentage breakdown of how the awards are split
 5. People who passed away before being able to receive their prize
+6. How many women have won awards? And how many men have won awards?
 
 The dataset we will be utilizing will be the
 [NobelPrize API](https://nobelprize.readme.io/), because it
