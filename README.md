@@ -17,7 +17,6 @@ project are:
 3. The number of prizes awarded for each category
 4. The percentage breakdown of how the awards are split
 5. People who passed away before being able to receive their prize
-6. How many women have won awards? And how many men have won awards?
 
 The dataset we will be utilizing will be the
 [NobelPrize API](https://nobelprize.readme.io/), because it
@@ -28,11 +27,19 @@ Prize.
 
 ## Technical Description
 
-(TODO, copied instructions from canvas)
-This section of your proposal is an opportunity to think through the specific analytical steps you'll need to complete throughout the project.
+- How will you be reading in your data (i.e., are you using an API, or is it a static .csv/.json file)?
 
-How will you be reading in your data (i.e., are you using an API, or is it a static .csv/.json file)?
-What types of data-wrangling (reshaping, reformatting, etc.) will you need to do to your data?
-What (major/new) libraries will be using in this project (no need to list common libraries that are used in many projects such as dplyr)
-What major challenges do you anticipate?
-Not required, but optional: what questions, if any, will you be answering with statistical analysis/machine learning?
+We will be using various resources to read in data, including API from [NobelPrize API](https://nobelprize.readme.io/), .csv file from [Kaggle](https://www.kaggle.com/nobelfoundation/nobel-laureates/data ), and archives from [The Nobel Prize Internet Archives](http://www.almaz.com/nobel/peace/).
+
+- What types of data-wrangling (reshaping, reformatting, etc.) will you need to do to your data?
+
+Some of the data-wrangling we will make use of are:
+1. grouping data (i.e., find the total number of winners for each country)
+2. making new variables (i.e. create a boolean variable which indicates whether or not the Nobel winners received the Prize before they passes away.)
+3. subsetting observations (i.e. create subsets of observations based on gender)
+
+- What (major/new) libraries will be using in this project (no need to list common libraries that are used in many projects such as dplyr)
+
+We will mainly use *Plotly* in data visualizations (i.e., we will use an interactive map to visualize the countries that are represented by the Nobel winners)
+
+- What major challenges do you anticipate?
