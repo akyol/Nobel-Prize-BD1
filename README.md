@@ -4,7 +4,7 @@ INFO 201 Group BD1's repo that will explore and gather insightful information fr
 
 ## Project Description
 
-Our project will be focused on analyzing data about Nobel Prize winners
+Our project will be focused on analyzing data about **Nobel Prize winners**
 over the years. Some of the target audiences who might look at the
 visualizations we create could be current scholars who are curious about
 the qualities of a winner of a prize, or promoters of political justice
@@ -18,9 +18,12 @@ project are:
 4. The percentage breakdown of how the awards are split
 5. People who passed away before being able to receive their prize
 
+We plan to create interactive map visualizations, tables, and charts
+in order to summarize the relevant data to answer these questions.
+
 The dataset we will be utilizing will be the
 [NobelPrize API](https://nobelprize.readme.io/), because it
-details a lot of specific information about each recipient of these prizes.
+details a lot of _specific_ information about each recipient of these prizes.
 This API was created by Nobelprize.org, the Official Website of the Nobel
 Prize.
 
