@@ -30,21 +30,21 @@ Prize.
 
 ## Technical Description
 
-- How will you be reading in your data (i.e., are you using an API, or is it a static .csv/.json file)?
+**How will you be reading in your data (i.e., are you using an API, or is it a static .csv/.json file)?**
 
 We will be using various resources to read in data, including API from [NobelPrize API](https://nobelprize.readme.io/), .csv file from [Kaggle](https://www.kaggle.com/nobelfoundation/nobel-laureates/data ), and archives from [The Nobel Prize Internet Archives](http://www.almaz.com/nobel/peace/).
 
-- What types of data-wrangling (reshaping, reformatting, etc.) will you need to do to your data?
+**What types of data-wrangling (reshaping, reformatting, etc.) will you need to do to your data?**
 
 Some of the data-wrangling we will make use of are:
 1. grouping data (i.e., find the total number of winners for each country)
 2. making new variables (i.e. create a boolean variable which indicates whether or not the Nobel winners received the Prize before they passes away.)
 3. subsetting observations (i.e. create subsets of observations based on gender)
 
-- What (major/new) libraries will be using in this project (no need to list common libraries that are used in many projects such as dplyr)
+**What (major/new) libraries will be using in this project (no need to list common libraries that are used in many projects such as dplyr)**
 
 We will mainly use *Plotly* in data visualizations (i.e., we will use an interactive map to visualize the countries that are represented by the Nobel winners)
 
-- What major challenges do you anticipate?
+**What major challenges do you anticipate?**
 
 We may run into difficulties answering all the questions because we haven't find all the datasets we needed. And creating a nice layout is also quite challenging.
