@@ -43,8 +43,8 @@ Some of the data-wrangling we will make use of are:
 
 **What (major/new) libraries will be using in this project (no need to list common libraries that are used in many projects such as dplyr)**
 
-We will mainly use *Plotly* in data visualizations (i.e., we will use an interactive map to visualize the countries that are represented by the Nobel winners)
+We will mainly use *Plotly* in data visualizations (i.e., we will create an interactive map to visualize the countries that are represented by the Nobel winners)
 
 **What major challenges do you anticipate?**
 
-We may run into difficulties answering all the questions because we haven't find all the datasets we needed. And creating a nice layout is also quite challenging.
+We may run into difficulties answering all the questions addressed above because we haven't find all the datasets we needed. And creating a nice layout is also quite challenging.
