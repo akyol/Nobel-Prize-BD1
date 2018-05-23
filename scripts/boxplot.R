@@ -2,11 +2,8 @@
 library(dplyr)
 library(plotly)
 
-data <- read.csv("/Users/YixinXu/Desktop/INFO201/Nobel-Prize-BD1/data/laureate.csv",
-                 stringsAsFactors = FALSE)
-
 # Build a box plot for average age by categories
-build_boxplot <- function (given_start, given_end) {
+build_boxplot <- function (data, given_start, given_end) {
   categories <- c("chemistry", "economics", "literature", "medicine", "peace",
                   "physics")
   extract_age <- function(given_category, given_start, given_end) {
@@ -47,4 +44,3 @@ build_boxplot <- function (given_start, given_end) {
   }
   return(boxplot)
 }
-build_boxplot(1901, 1980)
