@@ -6,19 +6,57 @@ shinyUI(navbarPage(
   theme = "styles.css",
   "Midwest Population",
   tabPanel(
+    "Intro",
+    titlePanel("Introduction"),
+    sidebarLayout(
+      sidebarPanel(
+        selectInput(
+          "professor",
+          label = "Professor",
+          choices = list(
+            "Yes" = "yes",
+            "No" = "no",
+            "N/A" = "na"
+          ),
+          selected = "na"
+        ),
+        selectInput(
+          "gender_map",
+          label = "Gender",
+          choices = list(
+            "Male" = "male",
+            "Female" = "female",
+            "N/A" = "na"
+          ),
+          selected = "na"
+        ),
+        selectInput(
+          "country",
+          label = "Country",
+          choices = list(
+            "U.S."
+          )
+        )
+      ),
+      mainPanel(
+        plotlyOutput("map")
+      )
+    )
+  ),
+  tabPanel(
     "Map",
     titlePanel("Map of Recipients' Birthplaces"),
     sidebarLayout(
       sidebarPanel(
         selectInput(
           "professor",
-          label = "Professor?",
+          label = "Professor",
           choices = list(
             "Yes" = "yes",
             "No" = "no",
-            "Both" = "both"
+            "N/A" = "na"
           ),
-          selected = "both"
+          selected = "na"
         ),
         selectInput(
           "gender_map",
@@ -55,7 +93,8 @@ shinyUI(navbarPage(
             "Male" = "male",
             "Female" = "female",
             "N/A" = "na"
-          )
+          ),
+          selected = "na"
         ),
         sliderInput(
           "decade",
@@ -63,7 +102,8 @@ shinyUI(navbarPage(
           min = 1900,
           max = 2010,
           value = 1900,
-          step = 10
+          step = 10,
+          ticks = FALSE
         )
       ),
       mainPanel(
@@ -79,7 +119,10 @@ shinyUI(navbarPage(
         sliderInput(
           "time_range", 
           label = "Time Range",
-          min = 1901, max = 2018, value = c(1901, 2018)
+          min = 1901,
+          max = 2018,
+          value = c(1901, 2018),
+          ticks = FALSE
         )
       ),
       mainPanel(
