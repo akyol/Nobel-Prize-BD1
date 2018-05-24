@@ -3,13 +3,16 @@ library(dplyr)
 library(plotly)
 
 # Build a box plot for average age by categories
-build_boxplot <- function (data, given_start, given_end) {
+build_boxplot <- function (data, given_range) {
   categories <- c("chemistry", "economics", "literature", "medicine", "peace",
                   "physics")
-  extract_age <- function(given_category, given_start, given_end) {
-    new_data <- filter(data, category == given_category & 
-                       born != "0000-00-00" & year >= given_start & 
-                       year <= given_end)
+  data_in_range <- filter(data, born != "0000-00-00" & year >= given_range[1] & 
+                            year <= given_range[2])
+  total_born_year <- data_in_range$born
+  total_born_year <- as.numeric(substr(total_born_year, 1, 4))
+  avg_age <- as.numeric(data_in_range$year) - total_born_year
+  extract_age <- function(given_category) {
+    new_data <- filter(data_in_range, category == given_category)
     born_year <- new_data$born
     born_year <- as.numeric(substr(born_year, 1, 4))
     prize_year <- as.numeric(new_data$year)
@@ -17,12 +20,12 @@ build_boxplot <- function (data, given_start, given_end) {
     return(age)
   }
   
-  physics <- extract_age("physics", given_start, given_end)
-  chemistry <- extract_age("chemistry", given_start, given_end)
-  economics <- extract_age("economics", given_start, given_end)
-  literature <- extract_age("literature", given_start, given_end)
-  medicine <- extract_age("medicine", given_start, given_end)
-  peace <- extract_age("peace", given_start, given_end)
+  physics <- extract_age("physics")
+  chemistry <- extract_age("chemistry")
+  economics <- extract_age("economics")
+  literature <- extract_age("literature")
+  medicine <- extract_age("medicine")
+  peace <- extract_age("peace")
   
   if (length(economics) == 0) {
     boxplot <- plot_ly(type = "box") %>%
@@ -31,6 +34,7 @@ build_boxplot <- function (data, given_start, given_end) {
       add_boxplot(y = literature, name = "literature") %>%
       add_boxplot(y = medicine, name = "medicine") %>%
       add_boxplot(y = peace, name = "peace") %>%
+      add_boxplot(y = avg_age, name = "total") %>%
       layout(title = "Age Distribution by Prize Categories")
   } else {
     boxplot <- plot_ly(type = "box") %>%
@@ -40,7 +44,13 @@ build_boxplot <- function (data, given_start, given_end) {
       add_boxplot(y = literature, name = "literature") %>%
       add_boxplot(y = medicine, name = "medicine") %>%
       add_boxplot(y = peace, name = "peace") %>%
+      add_boxplot(y = avg_age, name = "total") %>%
       layout(title = "Age Distribution by Prize Categories")
   }
   return(boxplot)
 }
+
+# Test the function out
+data <- 
+  read.csv("/Users/YixinXu/Desktop/INFO201/Nobel-Prize-BD1/data/laureate.csv")
+build_boxplot(data, c(1901, 1980))
