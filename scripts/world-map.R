@@ -70,6 +70,31 @@ build_map <- function(laureate, professor, gender_var, country_var) {
     #   countrycolor = toRGB("white")
     # )
     g <- list(
+      resolution = 50,
+      showframe = F,
+      showland = TRUE,
+      showlakes = TRUE,
+      showcountries = TRUE,
+      landcolor = toRGB("grey80"),
+      countrycolor = 'black',
+      lakecolor = toRGB("white"),
+      projection = list(type = "equirectangular", scale = 2),
+      coastlinewidth = 2,
+      lataxis = list(
+        range = c(20, 50),
+        showgrid = F,
+        tickmode = "linear",
+        dtick = 10
+      ),
+      lonaxis = list(
+        range = c(40, 90),
+        showgrid = F,
+        tickmode = "linear",
+        dtick = 20
+      )
+    )
+    
+    g <- list(
       scope = 'japan',
       showland = TRUE,
       landcolor = toRGB("gray95"),
