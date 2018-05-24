@@ -1,7 +1,13 @@
 library(shiny)
 library(ggplot2)
 
+data <- read.csv("/data/laureate.csv")
+source("/scripts/boxplot.R")
+
 shinyServer(function(input, output) {
+  output$box <- renderPlotly({
+    return(build_boxplot(data, input$time_range))
+  })
   
   output$bar <- renderPlot({
     source("/scripts/bar-chart.R")
@@ -12,5 +18,7 @@ shinyServer(function(input, output) {
     
     bar_plot
   })
+  
+  
   
 })
