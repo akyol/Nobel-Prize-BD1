@@ -5,29 +5,34 @@ library(dplyr)
 base_uri <- "http://api.nobelprize.org/v1/"
 resource_prize <- "prize.csv"
 resource_winner <- "laureate.csv"
-prize_dat <- read.csv(paste0(base_uri, resource_prize))
-winner_dat <- read.csv(paste0(base_uri, resource_winner))
+prize <- read.csv(paste0(base_uri, resource_prize))
+winner <- read.csv(paste0(base_uri, resource_winner))
 
-all_data <- left_join(prize_dat, winner_dat, by = "id")
-all_data <- all_data[order(all_data$id),]
-deduped_data <- all_data[!duplicated(all_data$id),]
-
-filtered_data <-  deduped_data %>% select(id, year.x, category.x, firstname.x, surname.x,
-                                          gender, motivation.x, share.x, born, bornCountry, 
-                                          bornCity, died, diedCountry, name, city, country)
-new_col_names <- 
-col_names <- colnames(filtered_data)
-
-for (i in 1:ncol(filtered_data)) {
-  colname <- col_names[i]
-  filtered_data[, colname] <- sub("^$", "Not Available", filtered_data[, colname])
+filterout <- function(prize_dat, winner_dat) {
+  all_data <- left_join(prize_dat, winner_dat, by = "id")
+  all_data <- all_data[order(all_data$id),]
+  deduped_data <- all_data[!duplicated(all_data$id),]
+  
+  filtered_data <-  deduped_data %>% select(id, year.x, category.x, firstname.x, surname.x,
+                                            gender, born, bornCountry, bornCity, died, 
+                                            diedCountry, name, motivation.x)
+  new_col_names <- c("ID", "Year", "Category", "First Name", "Surname", "Gender", "Born", 
+                     "Born Country", " Born City", "Died", "Died Country", "Organization", 
+                     "Motivation")
+  colnames(filtered_data) <- new_col_names
+  
+  for (i in 1:ncol(filtered_data)) {
+    colname <- new_col_names[i]
+    filtered_data[, colname] <- sub("^$", "Not Available", filtered_data[, colname])
+  }
+  filtered_data
 }
 
-build_table <- function(dat, input) {
+build_table <- function(prize_dat, winner_dat, input) {
+  dat <- filterout(prize_dat, winner_dat)
   filtered <- data.frame(which(dat == input, arr.ind=TRUE))
   location <- filtered[!duplicated(filtered$row),]
   result <- dat[location$row, ]
-  
 }
 
-location <- build_table(filtered_data, "France")
+location <- build_table(prize, winner, "France")
