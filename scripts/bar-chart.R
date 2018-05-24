@@ -13,4 +13,3 @@ prizes <- select(prizes, id, category)
 laureates <- select(laureates, id, gender)
 
 all_data <- left_join(prizes,laureates, by = "id") 
-
