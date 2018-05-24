@@ -26,6 +26,7 @@ shinyUI(navbarPage(
           choices = list(
             "Male" = "male",
             "Female" = "female",
+            "Organization" = "org",
             "N/A" = "na"
           ),
           selected = "na"
@@ -39,7 +40,7 @@ shinyUI(navbarPage(
         )
       ),
       mainPanel(
-        plotlyOutput("map")
+
       )
     )
   ),
@@ -64,6 +65,7 @@ shinyUI(navbarPage(
           choices = list(
             "Male" = "male",
             "Female" = "female",
+            "Organization" = "org",
             "N/A" = "na"
           ),
           selected = "na"
