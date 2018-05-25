@@ -92,6 +92,7 @@ shinyUI(navbarPage(
           choices = list(
             "Male" = "male",
             "Female" = "female",
+            "Organization" = "org",
             "N/A" = "na"
           ),
           selected = "na"
@@ -101,7 +102,7 @@ shinyUI(navbarPage(
           label = "Decade",
           min = 1900,
           max = 2010,
-          value = 1900,
+          value = 2010,
           step = 10,
           ticks = FALSE
         )
