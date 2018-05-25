@@ -28,11 +28,8 @@ filterout <- function(prize_dat, winner_dat) {
   filtered_data
 }
 
-build_table <- function(prize_dat, winner_dat, input) {
+build_table <- function(prize_dat, winner_dat) {
   dat <- filterout(prize_dat, winner_dat)
-  filtered <- data.frame(which(dat == input, arr.ind=TRUE))
-  location <- filtered[!duplicated(filtered$row),]
-  result <- dat[location$row, ]
+  dat
 }
 
-location <- build_table(prize, winner, "France")
