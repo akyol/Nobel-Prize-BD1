@@ -2,11 +2,9 @@ library(httr)
 library(jsonlite)
 library(dplyr)
 library(plotly)
-
-base_uri <- "http://api.nobelprize.org/v1/"
-resource <- "laureate.csv"
-
-laureate <- read.csv(paste0(base_uri, resource), stringsAsFactors = FALSE)
+library(geonames)
+library(countrycode)
+library(stringr)
 
 build_map <- function(laureate, professor, gender_var, country_var) {
   if (country_var != "na") {
@@ -22,7 +20,7 @@ build_map <- function(laureate, professor, gender_var, country_var) {
     laureate <- laureate %>% 
       filter(gender == gender_var)
   }
-  if (country == "na") {
+  if (country_var == "na") {
     world_data <- laureate %>% 
       mutate(bornCountryCode = countrycode(bornCountryCode, "iso2c", "iso3c")) %>% 
       filter(bornCountryCode != "NA") %>%
@@ -45,75 +43,43 @@ build_map <- function(laureate, professor, gender_var, country_var) {
         title = "Number of Nobel Prize Laureates",
         geo = g
       )
-  } else {
-    place <- laureate %>% 
-      filter(bornCountryCode == "JP") %>% 
-      select(bornCity) %>% 
-      mutate(bornCity = gsub(".+\\(now\\s|\\)", "", bornCity, perl=T)) %>% 
-      group_by(bornCity) %>% 
+  } 
+  else {
+    place <- dataset %>%
+      filter(bornCountryCode == "DE") %>%
+      select(bornCity) %>%
+      mutate(bornCity = gsub(".+\\(now\\s|\\)", "", bornCity, perl=T)) %>%
+      group_by(bornCity) %>%
       summarize(numb = n())
-    city_area <- function(city, country_id) {  
-      res <- GNsearch(name = city, country = country_id, geonamesUsername = "PataTekk") %>% 
-        select(lng, lat)
-      return(res[1, ])  
+    city_area <- function(city, country_id) {
+      #res <- GNsearch(name = city, country = country_id, geonamesUsername = "PataTekk") %>%
+       # select(lng, lat)
+      #return(res[1, ])
+      res <- GNsearch(name = city, country = country_id, geonamesUsername = "PataTekk")
+      if (nrow(res) == 0) {
+        return(c("NA", "NA"))
+      }
+      result <- c(res[1,2], res[1, 14])
+      return(result)
     }
-    lng_lat <- lapply(place$bornCity, city_area, country_id = "JP")
+    lng_lat <- lapply(place$bornCity, city_area, country_id = "DE")
     place <- bind_cols(place, do.call(rbind.data.frame, lng_lat))
-    # g <- list(
-    #   scope = 'usa',
-    #   projection = list(type = 'albers usa'),
-    #   showland = TRUE,
-    #   landcolor = toRGB("gray85"),
-    #   subunitwidth = 1,
-    #   countrywidth = 1,
-    #   subunitcolor = toRGB("white"),
-    #   countrycolor = toRGB("white")
-    # )
+
     g <- list(
-      resolution = 50,
-      showframe = F,
-      showland = TRUE,
-      showlakes = TRUE,
-      showcountries = TRUE,
-      landcolor = toRGB("grey80"),
-      countrycolor = 'black',
-      lakecolor = toRGB("white"),
-      projection = list(type = "equirectangular", scale = 2),
-      coastlinewidth = 2,
-      lataxis = list(
-        range = c(20, 50),
-        showgrid = F,
-        tickmode = "linear",
-        dtick = 10
-      ),
-      lonaxis = list(
-        range = c(40, 90),
-        showgrid = F,
-        tickmode = "linear",
-        dtick = 20
-      )
-    )
-    
-    g <- list(
-      scope = 'japan',
+      scope = 'usa',
       showland = TRUE,
       landcolor = toRGB("gray95"),
       countrycolor = toRGB("gray80")
     )
-    
+
     p <- plot_geo(place, sizes = c(1, 250)) %>%
       add_markers(
-        x = ~lng, y = ~lat, size = ~numb, color = ~numb, hoverinfo = "text",
+        x = ~lng, y = ~lat, size = ~numb, hoverinfo = "text",
         text = "hallo"
       ) %>%
-      # add_polygons(line = list(width = 0.4)) %>%
-      # add_polygons(
-      #   fillcolor = 'transparent',
-      #   line = list(color = 'black', width = 0.5),
-      #   showlegend = FALSE, hoverinfo = 'none'
-      # ) %>% 
       layout(title = '2014 US city populations<br>(Click legend to toggle)', geo = g)
   }
+  return(p);
 }
 
 
