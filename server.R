@@ -2,7 +2,7 @@ library(shiny)
 library(ggplot2)
 
 dataset <- read.csv("data/laureate.csv")
-source("scripts/world-map.R")
+#source("scripts/world-map.R")
 source("scripts/boxplot.R")
 source("scripts/search.R")
 
@@ -25,6 +25,8 @@ shinyServer(function(input, output) {
   output$box <- renderPlotly({
     return(build_boxplot(dataset, input$time_range))
   })
+  
+    
   # output$bar <- renderPlot({
   #   
   #   gender <- all_data[[input$gender_bar]]
