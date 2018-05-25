@@ -101,8 +101,8 @@ shinyUI(navbarPage(
           "decade",
           label = "Decade",
           min = 1900,
-          max = 2010,
-          value = 2010,
+          max = 2017,
+          value = 2017,
           step = 10,
           ticks = FALSE
         )
