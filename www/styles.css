@@ -58,7 +58,7 @@ h2 {
 
 #into {
   font-weight:bold;
-  font-size:40px;
+  font-size:50px;
   text-align:center;
   border:20px;
 }
@@ -66,6 +66,7 @@ h2 {
 #text{
   font-size:25px;
   text-align:left;
+  font-family:garamond;
   border-style:dotted;
   margin: 10px 50px 75px;
   padding: 20px;
