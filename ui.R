@@ -6,42 +6,12 @@ shinyUI(navbarPage(
   theme = "styles.css",
   "Midwest Population",
   tabPanel(
-    "Intro",
-    titlePanel("Introduction"),
-    sidebarLayout(
-      sidebarPanel(
-        selectInput(
-          "professor",
-          label = "Professor",
-          choices = list(
-            "Yes" = "yes",
-            "No" = "no",
-            "N/A" = "na"
-          ),
-          selected = "na"
-        ),
-        selectInput(
-          "gender_map",
-          label = "Gender",
-          choices = list(
-            "Male" = "male",
-            "Female" = "female",
-            "Organization" = "org",
-            "N/A" = "na"
-          ),
-          selected = "na"
-        ),
-        selectInput(
-          "country",
-          label = "Country",
-          choices = list(
-            "U.S."
-          )
-        )
-      ),
-      mainPanel(
-
-      )
+    "Search",
+    titlePanel("Search"),
+    fluidRow(
+      column(12,
+         dataTableOutput("search")
+       )
     )
   ),
   tabPanel(
@@ -74,7 +44,7 @@ shinyUI(navbarPage(
           "country",
           label = "Country",
           choices = list(
-            "U.S."
+            "N/A" = "na"
           )
         )
       ),

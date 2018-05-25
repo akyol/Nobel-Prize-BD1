@@ -2,11 +2,11 @@ library(httr)
 library(jsonlite)
 library(dplyr)
 
-base_uri <- "http://api.nobelprize.org/v1/"
-resource_prize <- "prize.csv"
-resource_winner <- "laureate.csv"
-prize <- read.csv(paste0(base_uri, resource_prize))
-winner <- read.csv(paste0(base_uri, resource_winner))
+# base_uri <- "http://api.nobelprize.org/v1/"
+# resource_prize <- "prize.csv"
+# resource_winner <- "laureate.csv"
+# prize <- read.csv(paste0(base_uri, resource_prize))
+# winner <- read.csv(paste0(base_uri, resource_winner))
 
 filterout <- function(prize_dat, winner_dat) {
   all_data <- left_join(prize_dat, winner_dat, by = "id")
@@ -28,11 +28,11 @@ filterout <- function(prize_dat, winner_dat) {
   filtered_data
 }
 
-build_table <- function(prize_dat, winner_dat, input) {
+build_table <- function(prize_dat, winner_dat) {
   dat <- filterout(prize_dat, winner_dat)
-  filtered <- data.frame(which(dat == input, arr.ind=TRUE))
-  location <- filtered[!duplicated(filtered$row),]
-  result <- dat[location$row, ]
+  # filtered <- data.frame(which(dat == input, arr.ind=TRUE))
+  # location <- filtered[!duplicated(filtered$row),]
+  # result <- dat[location$row, ]
 }
-
-location <- build_table(prize, winner, "France")
+# 
+# location <- build_table(prize, winner, "France")
