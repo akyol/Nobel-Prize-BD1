@@ -31,3 +31,4 @@ filterout <- function(prize_dat, winner_dat) {
 build_table <- function(prize_dat, winner_dat) {
   dat <- filterout(prize_dat, winner_dat)
 }
+
