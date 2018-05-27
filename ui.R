@@ -21,28 +21,30 @@ shinyUI(navbarPage(
       ),
       br(),
       fluidRow(
-        tags$h5(id = "text", "Our project will be focusing on analyzing data
+        tags$h5(id = "text", HTML("Our project focuses on analyzing data
                       about Nobel Prize winners over the years. Some of the 
                       target audiences who might look at the visualizations 
                       we create could be current scholars who are curious about
                       the qualities of a winner of a prize, or promoters of
-                      political justice worldwide.
+                      political justice worldwide.<br/><br/>
                       Questions that we would like to inform our audience based
-                      on this project are:
-                      The countries that are represented by the winners
-                      Which professors from US universities won Nobel prizes
-                      The number of prizes awarded for each category
-                      The percentage breakdown of how the awards are split
-                      People who passed away before being able to receive their 
-                      prize
-                      We plan to create interactive map visualizations, tables,
-                      and charts in order to summarize the relevant data to 
-                      answer these questions.
-                      The dataset we will be utilizing will be the NobelPrize
-                      API, because it details a lot of specific information 
-                      about each recipient of these prizes. 
-                      This API was created by Nobelprize.org, the Official 
-                      Website of the Nobel Prize.")
+                      on this project are:<br/>
+                      <li>What are the countries that are represented by the
+                      prize winners?</li>
+                      <li>What is the number of prizes awarded for each category
+                      , and among them, how many are awarded for men and how 
+                      many are for women?</li>
+                      <li>What is the age distribution of the prize winners by
+                      categories and the given time range?</li><br/>
+                      We have extracted relevant data and created interactive 
+                      visualizations such as map, 
+                      bar graph and boxplot, and tables to answer the above
+                      questions.
+                      The dataset we use comes from
+                      <a href=https://nobelprize.readme.io/>Nobelprize.org</a>
+                      We choose to use this API because it provides detailed
+                      information about each recipient of these prizes.")
+        )
       )
     )
   ),
