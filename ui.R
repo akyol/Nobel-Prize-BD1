@@ -149,7 +149,15 @@ shinyUI(navbarPage(
                  winners in total and by categories. The data being displayed
                  change when the range of year selected changes so that
                  you can see how the age distribution has changed, or has
-                 not changed, throughout the time. ")
+                 not changed, throughout the time. For example, the average age
+                 of prize winners regardless of prize categories
+                 has increased for about 5 years and 
+                 the median age of prize winners has increased for about 10 
+                 years in each category besides peace/literature. Also, the
+                 boxplots allow you to see the outliers easily. The youngest 
+                 prize winner is 17 years old, and the oldest prize winner is 
+                 90 years old, indicating that it is very unusual to win 
+                 Nobel Prize at these ages.")
         )
       )
     )
