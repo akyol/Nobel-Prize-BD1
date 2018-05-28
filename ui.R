@@ -44,7 +44,8 @@ shinyUI(navbarPage(
                       The dataset we use comes from
                       <a href=https://nobelprize.readme.io/>Nobelprize.org</a>
                       We choose to use this API because it provides detailed
-                      information about each recipient of these prizes.")
+                      information about each recipient of these prizes and it
+                      is usually updated.")
         )
       )
     )
