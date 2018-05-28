@@ -22,7 +22,7 @@ shinyUI(navbarPage(
       br(),
       fluidRow(
         tags$h5(id = "text", HTML("Our project focuses on analyzing data
-                      about Nobel Prize winners over the years. Some of the 
+                      about Nobel Prize winners over the years. Some 
                       target audiences who might look at the visualizations 
                       we create could be current scholars who are curious about
                       the qualities of a winner of a prize, or promoters of
@@ -33,9 +33,10 @@ shinyUI(navbarPage(
                       prize winners?</li>
                       <li>What is the number of prizes awarded for each category
                       , and among them, how many are awarded for men and how 
-                      many are for women?</li>
+                      many are for women? Are the prize winners typically men?
+                      </li>
                       <li>What is the age distribution of the prize winners by
-                      categories and the given time range?</li><br/>
+                      categories in the given time range?</li><br/>
                       We have extracted relevant data and created interactive 
                       visualizations such as map, 
                       bar graph and boxplot, and tables to answer the above
