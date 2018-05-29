@@ -1,7 +1,7 @@
 library(shiny)
 library(ggplot2)
 
-dataset <- read.csv("data/laureate.csv")
+# dataset <- read.csv("data/laureate.csv")
 source("scripts/world-map.R")
 source("scripts/boxplot.R")
 source("scripts/search.R")
