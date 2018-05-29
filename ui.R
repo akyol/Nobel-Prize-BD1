@@ -1,19 +1,23 @@
 library(shiny)
 library(dplyr)
 library(plotly)
+library(plotlyBars)
+library(countrycode)
+
+base_uri <- "http://api.nobelprize.org/v1/"
+resource_winner <- "laureate.csv"
+winner <- read.csv(paste0(base_uri, resource_winner), stringsAsFactors = FALSE)
+
+filter_country <- winner %>% 
+  distinct(bornCountryCode) %>% 
+  mutate(bornCountry = countrycode(bornCountryCode, "iso2c", "country.name")) %>% 
+  filter(bornCountry != "NA")
+filter_country <- setNames(as.list(as.character(filter_country$bornCountryCode)), filter_country$bornCountry)
+filter_country$"N/A" <- "na"
 
 shinyUI(navbarPage(
   theme = "styles.css",
   "Midwest Population",
-  tabPanel(
-    "Search",
-    titlePanel("Search"),
-    fluidRow(
-      column(12,
-         dataTableOutput("search")
-       )
-    )
-  ),
   tabPanel(
     "Map",
     titlePanel("Map of Recipients' Birthplaces"),
@@ -35,7 +39,6 @@ shinyUI(navbarPage(
           choices = list(
             "Male" = "male",
             "Female" = "female",
-            "Organization" = "org",
             "N/A" = "na"
           ),
           selected = "na"
@@ -43,13 +46,21 @@ shinyUI(navbarPage(
         selectInput(
           "country",
           label = "Country",
-          choices = list(
-            "N/A" = "na"
-          )
+          choices = filter_country,
+          selected = "na"
         )
       ),
       mainPanel(
-        plotlyOutput("map")
+        withBarsUI(plotlyOutput("map"))
+      )
+    )
+  ),
+  tabPanel(
+    "Search",
+    titlePanel("Search"),
+    fluidRow(
+      column(12,
+             dataTableOutput("search")
       )
     )
   ),
@@ -64,6 +75,7 @@ shinyUI(navbarPage(
           choices = list(
             "Male" = "male",
             "Female" = "female",
+            "Organization" = "org",
             "N/A" = "na"
           ),
           selected = "na"

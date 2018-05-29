@@ -2,38 +2,68 @@ library(httr)
 library(jsonlite)
 library(dplyr)
 library(plotly)
-library(geonames)
 library(countrycode)
 library(stringr)
 
-build_map <- function(laureate, professor, gender_var, country_var) {
-  if (country_var != "na") {
-    if (country_var == "yes") {
-      laureate <- laureate %>% 
+source("data/api-key.R")
+
+base_map_uri <- "https://maps.googleapis.com/maps/api/geocode/json"
+
+geolocation <- readRDS("data/geolocation.rds")
+
+city_area <- function(city_name) {
+  query_params <- list(address = city_name, key = api_key)
+  response <- GET(base_map_uri, query = query_params)
+  body <- fromJSON(content(response, "text"))
+  if (body$status == "ZERO_RESULTS") {
+    new_text <- gsub(",\\s[A-Z][A-Z]", "", city_name, perl=T)
+    query_params <- list(address = new_text, key = api_key)
+    response <- GET(base_map_uri, query = query_params)
+    body <- fromJSON(content(response, "text"))
+  }
+  result <- list(lat = as.numeric(body$results$geometry$location[1, 1]),
+                 lng = as.numeric(body$results$geometry$location[1,2]))
+  return(result)
+}
+
+build_map <- function(dataset, professor_var, gender_var, country_var) {
+  dataset <- dataset %>% 
+    mutate(bornCity = gsub(".+\\(now\\s|\\)|,\\s[A-Z][A-Z]", "", bornCity, perl=T)) %>% 
+    replace(. == "&#346;eteniai", "Śeteniai") %>% 
+    replace(. == "Jhang Maghi&#257;na", "Jhang Maghiāna")
+  filter_data <- dataset
+  if (professor_var != "na") {
+    if (professor_var == "yes") {
+      filter_data <- filter_data %>% 
         filter(str_detect(name, "University"))
     } else {
-      laureate <- laureate %>% 
+      filter_data <- filter_data %>% 
         filter(!str_detect(name, "University"))
     }
   }
   if (gender_var != "na") {
-    laureate <- laureate %>% 
+    filter_data <- filter_data %>% 
       filter(gender == gender_var)
   }
   if (country_var == "na") {
-    world_data <- laureate %>% 
+    world_data <- filter_data %>% 
       mutate(bornCountryCode = countrycode(bornCountryCode, "iso2c", "iso3c")) %>% 
       filter(bornCountryCode != "NA") %>%
       group_by(bornCountryCode) %>% 
-      summarize(bornCountry = first(bornCountry), numb = n())
+      summarize(numb = n())
     
-    l <- list(color = toRGB("grey"), width = 0.5)
+    all_country <- readRDS("data/countries.rds")
+    all_country <- all_country %>%
+      full_join(world_data, by ="bornCountryCode") %>%
+      replace(is.na(.), 0)
+    
+    l <- list(color = toRGB("black"), width = 0.5)
     g <- list(
       showframe = FALSE,
       showcoastlines = FALSE,
       projection = list(type = 'Mercator')
     )
-    p <- plot_geo(world_data) %>%
+    p <- plot_geo(all_country) %>%
       add_trace(
         z = ~numb, color = ~numb, colors = 'Blues',
         text = ~bornCountry, locations = ~bornCountryCode, marker = list(line = l)
@@ -43,44 +73,68 @@ build_map <- function(laureate, professor, gender_var, country_var) {
         title = "Number of Nobel Prize Laureates",
         geo = g
       )
-  } 
-  else {
-    place <- dataset %>%
-      filter(bornCountryCode == "DE") %>%
-      select(bornCity) %>%
-      mutate(bornCity = gsub(".+\\(now\\s|\\)", "", bornCity, perl=T)) %>%
-      group_by(bornCity) %>%
-      summarize(numb = n())
-    city_area <- function(city, country_id) {
-      #res <- GNsearch(name = city, country = country_id, geonamesUsername = "PataTekk") %>%
-       # select(lng, lat)
-      #return(res[1, ])
-      res <- GNsearch(name = city, country = country_id, geonamesUsername = "PataTekk")
-      if (nrow(res) == 0) {
-        return(c("NA", "NA"))
-      }
-      result <- c(res[1,2], res[1, 14])
-      return(result)
+    return(p)
+  } else {
+    place <- dataset %>% 
+      filter(bornCity != "") %>%
+      group_by(bornCity) %>% 
+      summarize(bornCountryCode = first(bornCountryCode), numb = n()) %>% 
+      mutate(bornCountry = countrycode(bornCountryCode,"iso2c",
+                                       "country.name"))
+    if (nrow(geolocation) < nrow(place)) {
+      temp_data <- place %>% 
+        filter(!(bornCity %in% geolocation$bornCity))
+        # filter(bornCity != "") %>%
+        # group_by(bornCity) %>% 
+        # summarize(bornCountryCode = first(bornCountryCode)) %>% 
+        # mutate(bornCity = gsub(".+\\(now\\s|\\)|,\\s[A-Z][A-Z]", "",
+        #                        bornCity, perl=T)) %>% 
+        # mutate(bornCountry = countrycode(bornCountryCode,"iso2c",
+        #                                 "country.name"))
+      get_geo <- lapply(paste0(temp_data$bornCity, ", ",
+                            temp_data$bornCountryCode), city_area)
+      temp_data <- bind_cols(temp_data, do.call(rbind.data.frame, get_geo))
+      geolocation <- rbind(geolocation, temp_data)
+      saveRDS(geolocation, "data/geolocation.rds")
     }
-    lng_lat <- lapply(place$bornCity, city_area, country_id = "DE")
-    place <- bind_cols(place, do.call(rbind.data.frame, lng_lat))
-
-    g <- list(
-      scope = 'usa',
-      showland = TRUE,
-      landcolor = toRGB("gray95"),
-      countrycolor = toRGB("gray80")
-    )
-
-    p <- plot_geo(place, sizes = c(1, 250)) %>%
-      add_markers(
-        x = ~lng, y = ~lat, size = ~numb, hoverinfo = "text",
-        text = "hallo"
-      ) %>%
-      layout(title = '2014 US city populations<br>(Click legend to toggle)', geo = g)
+    filter_compare <- filter_data %>% 
+      filter(bornCity != "") %>%
+      filter(bornCountryCode == country_var) %>% 
+      group_by(bornCity) %>% 
+      summarize(bornCountryCode = first(bornCountryCode), numb = n()) %>% 
+      mutate(bornCountry = countrycode(bornCountryCode,"iso2c",
+                                       "country.name"))
+    
+    city_geo <- geolocation %>% 
+      filter(bornCity %in% filter_compare$bornCity) %>% 
+      select(lat, lng)
+    city_geo <- bind_cols(filter_compare, city_geo)
+    
+    if (nrow(city_geo) == 0) {
+      return(plotly_empty())
+    } else {
+      min_lng <- min(city_geo$lng)
+      max_lng <- max(city_geo$lng)
+      
+      min_lat <- min(city_geo$lat)
+      max_lat <- max(city_geo$lat)
+      
+      g <- list(
+        scope = 'world',
+        showland = TRUE,
+        landcolor = toRGB("gray95"),
+        countrycolor = toRGB("gray80"),
+        lonaxis = list(range = c(min_lng - 10, max_lng + 10)),
+        lataxis = list(range = c(min_lat - 10, max_lat + 10))
+      )
+      
+      p <- plot_geo(city_geo, sizes = c(5, 50)) %>%
+        add_markers(
+          x = ~lng, y = ~lat, size = ~numb, hoverinfo = "text",
+          text = ~paste0(city_geo$bornCity, ", ", city_geo$numb)
+        ) %>%
+        layout(title = paste("Map of", city_geo$bornCountry), geo = g)
+      return(p)
+    }
   }
-  return(p);
 }
-
-
-     
