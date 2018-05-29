@@ -1,6 +1,6 @@
 library(httr)
-library(jsonlite)
 library(dplyr)
+library(stringi)
 
 # base_uri <- "http://api.nobelprize.org/v1/"
 # resource_prize <- "prize.csv"
@@ -20,6 +20,8 @@ filterout <- function(prize_dat, winner_dat) {
                      "Born Country", " Born City", "Died", "Died Country", "Organization", 
                      "Motivation")
   colnames(filtered_data) <- new_col_names
+  filtered_data[, "Category"] <- stri_trans_totitle(filtered_data[, "Category"])
+  filtered_data$Gender <- toupper(substr((filtered_data$Gender), 0, 1))
   
   for (i in 1:ncol(filtered_data)) {
     colname <- new_col_names[i]

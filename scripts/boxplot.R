@@ -69,6 +69,6 @@ build_boxplot <- function (data, given_range) {
 }
 
 # Test the function out
- data <- 
-  read.csv("/Users/YixinXu/Desktop/INFO201/Nobel-Prize-BD1/data/laureate.csv")
- build_boxplot(data, c(1901, 1980))
+ #data <- 
+  #read.csv("/Users/YixinXu/Desktop/INFO201/Nobel-Prize-BD1/data/laureate.csv")
+ #build_boxplot(data, c(1901, 1980))
