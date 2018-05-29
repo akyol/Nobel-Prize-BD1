@@ -1,0 +1,12 @@
+name: Nobel-Prize-BD1
+title: Nobel-Prize-BD1
+username:
+account: patatekk
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 350724
+bundleId: 1399165
+url: https://patatekk.shinyapps.io/Nobel-Prize-BD1/
+when: 1527625470.45611
+asMultiple: FALSE
+asStatic: FALSE
