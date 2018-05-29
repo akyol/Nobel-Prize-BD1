@@ -32,4 +32,8 @@ vignettes/*.pdf
 *.utf8.md
 *.knit.md
 
+<<<<<<< HEAD
 data/api-key.R
+=======
+.DS_Store
+>>>>>>> cb87b87f116ec4154728318cf87a03dc37fba48b

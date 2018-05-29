@@ -1,6 +1,6 @@
 library(httr)
-library(jsonlite)
 library(dplyr)
+library(stringi)
 
 # base_uri <- "http://api.nobelprize.org/v1/"
 # resource_prize <- "prize.csv"
@@ -20,6 +20,8 @@ filterout <- function(prize_dat, winner_dat) {
                      "Born Country", " Born City", "Died", "Died Country", "Organization", 
                      "Motivation")
   colnames(filtered_data) <- new_col_names
+  filtered_data[, "Category"] <- stri_trans_totitle(filtered_data[, "Category"])
+  filtered_data$Gender <- toupper(substr((filtered_data$Gender), 0, 1))
   
   for (i in 1:ncol(filtered_data)) {
     colname <- new_col_names[i]
@@ -30,9 +32,5 @@ filterout <- function(prize_dat, winner_dat) {
 
 build_table <- function(prize_dat, winner_dat) {
   dat <- filterout(prize_dat, winner_dat)
-  # filtered <- data.frame(which(dat == input, arr.ind=TRUE))
-  # location <- filtered[!duplicated(filtered$row),]
-  # result <- dat[location$row, ]
 }
-# 
-# location <- build_table(prize, winner, "France")
+

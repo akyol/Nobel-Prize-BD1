@@ -29,28 +29,46 @@ build_boxplot <- function (data, given_range) {
   
   if (length(economics) == 0) {
     boxplot <- plot_ly(type = "box") %>%
+      add_boxplot(y = avg_age, name = "total") %>%
       add_boxplot(y = physics, name = "physics") %>%
       add_boxplot(y = chemistry, name = "chemistry") %>%
       add_boxplot(y = literature, name = "literature") %>%
       add_boxplot(y = medicine, name = "medicine") %>%
       add_boxplot(y = peace, name = "peace") %>%
-      add_boxplot(y = avg_age, name = "total") %>%
-      layout(title = "Age Distribution by Prize Categories")
+      layout(title = "Age Distribution by Prize Categories",
+             margin = list(b = 80),
+             xaxis = list(
+               title = "Category"
+             ),
+             yaxis = list(
+               autotick = TRUE,
+               title = "Age"
+             )
+      )
   } else {
     boxplot <- plot_ly(type = "box") %>%
+      add_boxplot(y = avg_age, name = "total") %>%
       add_boxplot(y = physics, name = "physics") %>%
       add_boxplot(y = chemistry, name = "chemistry") %>%
-      add_boxplot(y = economics, name = "economics") %>%
       add_boxplot(y = literature, name = "literature") %>%
       add_boxplot(y = medicine, name = "medicine") %>%
       add_boxplot(y = peace, name = "peace") %>%
-      add_boxplot(y = avg_age, name = "total") %>%
-      layout(title = "Age Distribution by Prize Categories")
+      add_boxplot(y = economics, name = "economics") %>%
+      layout(title = "Age Distribution by Prize Categories",
+             margin = list(b = 80),
+             xaxis = list(
+               title = "Category"
+             ),
+             yaxis = list(
+               autotick = TRUE,
+               title = "Age"
+             )
+      )
   }
   return(boxplot)
 }
 
 # Test the function out
-# data <- 
-#   read.csv("/Users/YixinXu/Desktop/INFO201/Nobel-Prize-BD1/data/laureate.csv")
-# build_boxplot(data, c(1901, 1980))
+ #data <- 
+  #read.csv("/Users/YixinXu/Desktop/INFO201/Nobel-Prize-BD1/data/laureate.csv")
+ #build_boxplot(data, c(1901, 1980))

@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat");
 
 body {
-  background-color: #F5F5F5;
+  background-color: #F1ECDB;
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -15,9 +15,6 @@ body {
   font-weight: normal;
 }
 
-.navbar {
-  background-color: #FFFFFF;
-}
 
 h2 {
   padding-bottom: 10px;
@@ -33,9 +30,48 @@ h2 {
   padding-bottom: 25px;
   background-color: white;
   width: 50%;
+  
 }
 
 .well, .col-sm-8 {
   border-radius: 5px;
   border: solid lightgrey 1px;
 }
+
+#responsive-img{
+  width:100%;
+  background-size:100% 100%;
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    color: #CB9717; /*Sets the text hover color on navbar*/
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+    font-size:20px;
+    color: white; /*BACKGROUND color for active*/
+    background-color: #D8BA71;
+}
+
+.navbar-default {
+    background-color: #E3D39D;
+    font-weight:bold;
+    font-size:16px;
+}
+
+#into {
+  font-weight:bold;
+  font-size:50px;
+  text-align:center;
+  border:20px;
+}
+
+#text{
+  font-size:25px;
+  text-align:left;
+  font-family:garamond;
+  border-style:dotted;
+  margin: 10px 50px 75px;
+  padding: 20px;
+}
+
