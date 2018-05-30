@@ -10,9 +10,12 @@ winner <- read.csv(paste0(base_uri, resource_winner), stringsAsFactors = FALSE)
 
 filter_country <- winner %>% 
   distinct(bornCountryCode) %>% 
-  mutate(bornCountry = countrycode(bornCountryCode, "iso2c", "country.name")) %>% 
+  mutate(bornCountry = countrycode(bornCountryCode, 
+                                   "iso2c", "country.name")) %>% 
   filter(bornCountry != "NA")
-filter_country <- setNames(as.list(as.character(filter_country$bornCountryCode)), filter_country$bornCountry)
+filter_country <- setNames(as.list(as.character
+                                   (filter_country$bornCountryCode)), 
+                           filter_country$bornCountry)
 filter_country$"N/A" <- "na"
 
 
@@ -118,7 +121,8 @@ shinyUI(navbarPage(
     fluidRow(
       tags$div(
         class = "summary", checked = NA,
-        tags$p(id = "map", "The visual above lets users view the distribution of laureate
+        tags$p(id = "map", "The visual above lets users view the distribution of
+               laureate
                winners across a world map and by choice a specific country.
                The visual can also be filtered by whether or not the laureate
                is a professor and if they are a man or woman. Users can see
@@ -232,12 +236,16 @@ shinyUI(navbarPage(
     fluidRow(
       tags$div(
         class = "summary", checked = NA,
-        tags$h6(HTML("Hello! Welcome to our Nobel Prize Project. It was created by <b>Jessica,
-                Yixin, Samantha, and Abraham. </b></br> We created this for our final for INFO 201,
-                and we hoped you learned a lot of new information, especially since many
-                 people don't really think about the Nobel Prize laureates in their daily 
-                lives. Who knows? Maybe one of these random facts will stick in your 
-                brain, and help you win if you're ever on Jeopardy someday."))
+        tags$h6(HTML("Hello! Welcome to our Nobel Prize Project. 
+                It was created by <b>Jessica,
+                Yixin, Samantha, and Abraham. </b></br> We created this for our 
+                final for INFO 201,
+                and we hoped you learned a lot of new information, especially 
+                since many people don't really think about the Nobel Prize 
+                laureates in their daily 
+                lives. Who knows? Maybe one of these random facts will stick 
+                in your brain, and help you win if you're ever on Jeopardy 
+                someday."))
         )
     )
   )
