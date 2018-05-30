@@ -16,7 +16,7 @@ laureates <- select(laureates, id, gender)
 all_data <- left_join(prizes, laureates, by = "id")
 
 
-build_bar <- function(gender_input, decade_input){
+build_bar <- function(gender_input, decade_input) {
   if (gender_input == "na") {
     data_in_range <- filter(all_data, year <= decade_input)
   } else {
