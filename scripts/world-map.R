@@ -153,8 +153,8 @@ build_map <- function(dataset, professor_var, gender_var, country_var) {
 
       p <- plot_geo(city_geo, sizes = c(5, 50)) %>%
         add_markers(
-          x = ~ lng, y = ~ lat, size = ~ numb, hoverinfo = "text",
-          text = ~ paste0(city_geo$bornCity, ", ", city_geo$numb)
+          x = ~ lng, y = ~ lat, size = ~ numb, color = "red",
+          text = ~ paste0(bornCity, ", ", numb)
         ) %>%
         layout(title = paste("Map of", city_geo$bornCountry), geo = g)
       return(p)

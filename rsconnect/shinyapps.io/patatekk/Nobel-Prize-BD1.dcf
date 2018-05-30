@@ -5,8 +5,8 @@ account: patatekk
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 350724
-bundleId: 1399628
+bundleId: 1401546
 url: https://patatekk.shinyapps.io/Nobel-Prize-BD1/
-when: 1527651609.90927
+when: 1527718691.68324
 asMultiple: FALSE
 asStatic: FALSE

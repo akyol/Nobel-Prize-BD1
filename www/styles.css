@@ -122,3 +122,8 @@ h6{
   padding: 20px;
   line-height:2;
 }
+
+#maptop {
+    padding-top: 20px;
+    background-color: #FFFFFF;
+}

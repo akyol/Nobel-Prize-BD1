@@ -77,9 +77,12 @@ shinyUI(navbarPage(
   tabPanel(
     "Map",
     titlePanel("Map of Recipients' Birthplaces"),
-    fluidRow(
-      column(12,
-             withBarsUI(plotlyOutput("map"))
+    tags$div(
+      id = "maptop",
+      fluidRow(
+        column(12,
+               withBarsUI(plotlyOutput("map"))
+        )
       )
     ),
     hr(),
