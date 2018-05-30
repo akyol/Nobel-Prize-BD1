@@ -104,7 +104,7 @@ build_map <- function(dataset, professor_var, gender_var, country_var) {
         "country.name"
       ))
 
-    # if the API is updated over the years, this if statement
+    # if the API is updated over the years, this statement
     # will bring geolocation up to date and store it for future use
     if (nrow(geolocation) < nrow(place)) {
       temp_data <- place %>%
