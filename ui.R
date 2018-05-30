@@ -231,5 +231,9 @@ shinyUI(navbarPage(
         )
       )
     )
+  ),
+  tabPanel(
+    "About Us",
+    titlePanel("About US")
   )
 ))
