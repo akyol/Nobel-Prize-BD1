@@ -105,6 +105,16 @@ shinyUI(navbarPage(
                  selected = "na"
                )
              )
+      ),
+      fluidRow(
+        tags$div(
+          class = "summary", checked = NA,
+          tags$p("The visual above lets users view the distribution of laureate
+                 winners across a world map and by choice a specific country.
+                 The visual can also be filtered by whether or not the laureate
+                 is a professor and if they are a man or woman. Users can see
+                 the uneven distribution of")
+          )
       )
     ),
     # sidebarLayout(
@@ -179,6 +189,7 @@ shinyUI(navbarPage(
         plotlyOutput("bar"),
         tags$div(
           class = "summary", checked = NA,
+          br(),
           tags$p("These barplots are a display of the Prize Catergory
                   distribution over the decades that the Nobel Prize has
                   has been in existance. The overall data will change when
