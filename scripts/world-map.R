@@ -9,8 +9,11 @@ source("data/api-key.R")
 
 base_map_uri <- "https://maps.googleapis.com/maps/api/geocode/json"
 
+# pre-computed data on latitude and longitude of Nobel Prize winners
 geolocation <- readRDS("data/geolocation.rds")
 
+# helper function that utilizes Google Geolocation API to
+# get the latitude and longitude of the given city name
 city_area <- function(city_name) {
   query_params <- list(address = city_name, key = api_key)
   response <- GET(base_map_uri, query = query_params)
@@ -26,12 +29,18 @@ city_area <- function(city_name) {
   return(result)
 }
 
+# main function that creates a plotly map that can be
+# manipulated as a choropleth world map or a bubble country map
 build_map <- function(dataset, professor_var, gender_var, country_var) {
+  
+  # simplify dataset with appropriate city names
   dataset <- dataset %>% 
     mutate(bornCity = gsub(".+\\(now\\s|\\)|,\\s[A-Z][A-Z]", "", bornCity, perl=T)) %>% 
     replace(. == "&#346;eteniai", "Śeteniai") %>% 
     replace(. == "Jhang Maghi&#257;na", "Jhang Maghiāna")
   filter_data <- dataset
+  
+  # filter by whether or not you want to sort by professor
   if (professor_var != "na") {
     if (professor_var == "yes") {
       filter_data <- filter_data %>% 
@@ -41,10 +50,16 @@ build_map <- function(dataset, professor_var, gender_var, country_var) {
         filter(!str_detect(name, "University"))
     }
   }
+  
+  # filter by gender
   if (gender_var != "na") {
     filter_data <- filter_data %>% 
       filter(gender == gender_var)
   }
+  
+  # creates world choropleth map of Nobel Prize winners or country
+  # bubble map depending if the user wants to sort by specific country
+  # note: professor and gender is still taken into account
   if (country_var == "na") {
     world_data <- filter_data %>% 
       mutate(bornCountryCode = countrycode(bornCountryCode, "iso2c", "iso3c")) %>% 
@@ -65,7 +80,7 @@ build_map <- function(dataset, professor_var, gender_var, country_var) {
     )
     p <- plot_geo(all_country) %>%
       add_trace(
-        z = ~numb, color = ~numb, colors = 'Blues',
+        z = ~numb, color = ~numb, colors = 'Reds',
         text = ~bornCountry, locations = ~bornCountryCode, marker = list(line = l)
       ) %>%
       colorbar(title = 'Number of Individuals') %>%
@@ -81,16 +96,12 @@ build_map <- function(dataset, professor_var, gender_var, country_var) {
       summarize(bornCountryCode = first(bornCountryCode), numb = n()) %>% 
       mutate(bornCountry = countrycode(bornCountryCode,"iso2c",
                                        "country.name"))
+    
+    # if the API is updated over the years, this if statement
+    # will bring geolocation up to date and store it for future use
     if (nrow(geolocation) < nrow(place)) {
       temp_data <- place %>% 
         filter(!(bornCity %in% geolocation$bornCity))
-        # filter(bornCity != "") %>%
-        # group_by(bornCity) %>% 
-        # summarize(bornCountryCode = first(bornCountryCode)) %>% 
-        # mutate(bornCity = gsub(".+\\(now\\s|\\)|,\\s[A-Z][A-Z]", "",
-        #                        bornCity, perl=T)) %>% 
-        # mutate(bornCountry = countrycode(bornCountryCode,"iso2c",
-        #                                 "country.name"))
       get_geo <- lapply(paste0(temp_data$bornCity, ", ",
                             temp_data$bornCountryCode), city_area)
       temp_data <- bind_cols(temp_data, do.call(rbind.data.frame, get_geo))
@@ -111,7 +122,7 @@ build_map <- function(dataset, professor_var, gender_var, country_var) {
     city_geo <- bind_cols(filter_compare, city_geo)
     
     if (nrow(city_geo) == 0) {
-      return(plotly_empty())
+      return(plotly_empty() %>% layout(title = "Laureate(s) Does Not Exist"))
     } else {
       min_lng <- min(city_geo$lng)
       max_lng <- max(city_geo$lng)
