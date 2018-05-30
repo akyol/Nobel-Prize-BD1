@@ -66,40 +66,80 @@ shinyUI(navbarPage(
   tabPanel(
     "Map",
     titlePanel("Map of Recipients' Birthplaces"),
-    sidebarLayout(
-      sidebarPanel(
-        selectInput(
-          "professor",
-          label = "Professor",
-          choices = list(
-            "Yes" = "yes",
-            "No" = "no",
-            "N/A" = "na"
-          ),
-          selected = "na"
-        ),
-        selectInput(
-          "gender_map",
-          label = "Gender",
-          choices = list(
-            "Male" = "male",
-            "Female" = "female",
-            "N/A" = "na"
-          ),
-          selected = "na"
-        ),
-        selectInput(
-          "country",
-          label = "Country",
-          choices = filter_country,
-          selected = "na"
-        )
-      ),
-      mainPanel(
-        withBarsUI(plotlyOutput("map"))
+    fluidRow(
+      column(12,
+             withBarsUI(plotlyOutput("map"))
+             )
+    ),
+    hr(),
+    fluidRow(
+      column(4,
+             selectInput(
+                 "professor",
+                 label = "Professor",
+                 choices = list(
+                   "Yes" = "yes",
+                   "No" = "no",
+                   "N/A" = "na"
+                 ),
+                 selected = "na"
+               )
+             ),
+      column(4,
+             selectInput(
+                 "gender_map",
+                 label = "Gender",
+                 choices = list(
+                   "Male" = "male",
+                   "Female" = "female",
+                   "N/A" = "na"
+                 ),
+                 selected = "na"
+               )
+             ),
+      column(4,
+             selectInput(
+                 "country",
+                 label = "Country",
+                 choices = filter_country,
+                 selected = "na"
+               )
+             )
       )
-    )
-  ),
+    ),
+    # sidebarLayout(
+    #   sidebarPanel(
+    #     selectInput(
+    #       "professor",
+    #       label = "Professor",
+    #       choices = list(
+    #         "Yes" = "yes",
+    #         "No" = "no",
+    #         "N/A" = "na"
+    #       ),
+    #       selected = "na"
+    #     ),
+    #     selectInput(
+    #       "gender_map",
+    #       label = "Gender",
+    #       choices = list(
+    #         "Male" = "male",
+    #         "Female" = "female",
+    #         "N/A" = "na"
+    #       ),
+    #       selected = "na"
+    #     ),
+    #     selectInput(
+    #       "country",
+    #       label = "Country",
+    #       choices = filter_country,
+    #       selected = "na"
+    #     )
+    #   ),
+    #   mainPanel(
+    #     withBarsUI(plotlyOutput("map"))
+    #   )
+    
   tabPanel(
     "Search",
     titlePanel("Search"),
