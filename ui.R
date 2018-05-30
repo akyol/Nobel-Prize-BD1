@@ -118,7 +118,7 @@ shinyUI(navbarPage(
     fluidRow(
       tags$div(
         class = "summary", checked = NA,
-        tags$p("The visual above lets users view the distribution of laureate
+        tags$p(id = "map", "The visual above lets users view the distribution of laureate
                winners across a world map and by choice a specific country.
                The visual can also be filtered by whether or not the laureate
                is a professor and if they are a man or woman. Users can see
