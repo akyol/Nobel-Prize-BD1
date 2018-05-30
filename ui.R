@@ -7,17 +7,15 @@ library(countrycode)
 base_uri <- "http://api.nobelprize.org/v1/"
 resource_winner <- "laureate.csv"
 winner <- read.csv(paste0(base_uri, resource_winner), stringsAsFactors = FALSE)
-
-filter_country <- winner %>% 
-  distinct(bornCountryCode) %>% 
-  mutate(bornCountry = countrycode(bornCountryCode, 
-                                   "iso2c", "country.name")) %>% 
+filter_country <- winner %>%
+  distinct(bornCountryCode) %>%
+  mutate(bornCountry = countrycode(bornCountryCode,
+                                   "iso2c", "country.name")) %>%
   filter(bornCountry != "NA")
 filter_country <- setNames(as.list(as.character
-                                   (filter_country$bornCountryCode)), 
+                                   (filter_country$bornCountryCode)),
                            filter_country$bornCountry)
 filter_country$"N/A" <- "na"
-
 
 shinyUI(navbarPage(
   theme = "styles.css",
@@ -35,11 +33,10 @@ shinyUI(navbarPage(
       fluidRow(
         tags$h3(id = "into", "Introduction")
       ),
-      
       fluidRow(
         tags$h5( HTML("Our project focuses on analyzing data
-                      about Nobel Prize winners over the years. Some 
-                      target audiences who might look at the visualizations 
+                      about Nobel Prize winners over the years. Some
+                      target audiences who might look at the visualizations
                       we create could be current scholars who are curious about
                       the qualities of a winner of a prize, or promoters of
                       political justice worldwide.<br/><br/>
@@ -48,13 +45,13 @@ shinyUI(navbarPage(
                       <li>What are the countries that are represented by the
                       prize winners?</li>
                       <li>What is the number of prizes awarded for each category
-                      , and among them, how many are awarded for men and how 
+                      , and among them, how many are awarded for men and how
                       many are for women? Are the prize winners typically men?
                       </li>
                       <li>What is the age distribution of the prize winners by
                       categories in the given time range?</li><br/>
-                      We have extracted relevant data and created interactive 
-                      visualizations such as map, 
+                      We have extracted relevant data and created interactive
+                      visualizations such as map,
                       bar graph and boxplot, and tables to answer the above
                       questions.
                       The dataset we use comes from
@@ -164,16 +161,16 @@ shinyUI(navbarPage(
           tags$p("These barplots are a display of the Prize Catergory
                   distribution over the decades that the Nobel Prize has
                   has been in existance. The overall data will change when
-                  adjusting the decades that the user wants to focus on, and 
+                  adjusting the decades that the user wants to focus on, and
                   if they want to change the gender/organization that wins.
-                  Earlier in the decades, some of the prizes were not in 
+                  Earlier in the decades, some of the prizes were not in
                   existance, so they are not represented by the plot shown.
                   Also, one of the biggest takeaways from this specific graph
                   is the huge difference between number of male and female
                   winners. Overall, males across the board have won at least 100
-                  prizes in each catergory, while females are only represented 
+                  prizes in each catergory, while females are only represented
                   by a range of 2 to 16 individuals in each of the catergories.
-                  Another thing to note is that organizations have only been 
+                  Another thing to note is that organizations have only been
                   been the recipients of the Peace Prize.")
         )
       )
@@ -185,7 +182,7 @@ shinyUI(navbarPage(
     sidebarLayout(
       sidebarPanel(
         sliderInput(
-          "time_range", 
+          "time_range",
           label = "Time Range",
           min = 1901,
           max = 2018,
@@ -203,12 +200,12 @@ shinyUI(navbarPage(
                  you can see how the age distribution has changed, or has
                  not changed, throughout the time. For example, the average age
                  of prize winners regardless of prize categories
-                 has increased for about 5 years and 
-                 the median age of prize winners has increased for about 10 
+                 has increased for about 5 years and
+                 the median age of prize winners has increased for about 10
                  years in each category besides peace/literature. Also, the
-                 boxplots allow you to see the outliers easily. The youngest 
-                 prize winner is 17 years old, and the oldest prize winner is 
-                 90 years old, indicating that it is very unusual to win 
+                 boxplots allow you to see the outliers easily. The youngest
+                 prize winner is 17 years old, and the oldest prize winner is
+                 90 years old, indicating that it is very unusual to win
                  Nobel Prize at these ages.")
         )
       )
@@ -220,14 +217,14 @@ shinyUI(navbarPage(
     br(),
     br(),
     fluidRow(
-      column(6, 
+      column(6,
              tags$img(class = "aboutusimg", id = "left", src = "Jessica.jpg")),
       column(6,
               tags$img(class = "aboutusimg", id = "right", src = "Yixin.jpg"))
     ),
     br(),
     fluidRow(
-      column(6, 
+      column(6,
              tags$img(class = "aboutusimg", id = "left", src = "Sammie.jpg")),
       column(6,
              tags$img(class = "aboutusimg", id = "right", src = "Abe.jpg"))
@@ -236,15 +233,15 @@ shinyUI(navbarPage(
     fluidRow(
       tags$div(
         class = "summary", checked = NA,
-        tags$h6(HTML("Hello! Welcome to our Nobel Prize Project. 
+        tags$h6(HTML("Hello! Welcome to our Nobel Prize Project.
                 It was created by <b>Jessica,
-                Yixin, Samantha, and Abraham. </b></br> We created this for our 
+                Yixin, Samantha, and Abraham. </b></br> We created this for our
                 final for INFO 201,
-                and we hoped you learned a lot of new information, especially 
-                since many people don't really think about the Nobel Prize 
-                laureates in their daily 
-                lives. Who knows? Maybe one of these random facts will stick 
-                in your brain, and help you win if you're ever on Jeopardy 
+                and we hoped you learned a lot of new information, especially
+                since many people don't really think about the Nobel Prize
+                laureates in their daily
+                lives. Who knows? Maybe one of these random facts will stick
+                in your brain, and help you win if you're ever on Jeopardy
                 someday."))
         )
     )
