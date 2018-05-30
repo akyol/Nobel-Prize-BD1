@@ -1,5 +1,5 @@
 # Nobel-Prize-BD1
-INFO 201 Group BD1's repo that will explore and gather insightful information from data about Nobel Prize recipients (and their deaths).
+INFO 201 Group BD1's repo that will explore and gather insightful information and trends from data about Nobel Prize recipients (i.e. gender, profession, age, subject, upbringing, motivation).
 
 Link: https://patatekk.shinyapps.io/Nobel-Prize-BD1/
 
