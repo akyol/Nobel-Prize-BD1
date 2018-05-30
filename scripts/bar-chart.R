@@ -7,7 +7,8 @@ prize_resource <- "/prize.csv"
 prizes <- read.csv(paste0(base_uri, prize_resource), stringsAsFactors = FALSE)
 
 laureate_resource <- "/laureate.csv"
-laureates <- read.csv(paste0(base_uri, laureate_resource), stringsAsFactors = FALSE)
+laureates <- read.csv(paste0(base_uri, laureate_resource), 
+                      stringsAsFactors = FALSE)
 
 prizes <- select(prizes, id, category, year)
 laureates <- select(laureates, id, gender)
@@ -20,7 +21,8 @@ build_bar <- function(gender_input, decade_input){
   if(gender_input == "na") {
     data_in_range <- filter(all_data, year <= decade_input)
   } else {
-    data_in_range <- filter(all_data, gender == gender_input, year <= decade_input)
+    data_in_range <- filter(all_data, gender == gender_input, 
+                            year <= decade_input)
   }
   
   prize_count <- group_by(data_in_range, category) %>% 
