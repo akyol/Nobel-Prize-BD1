@@ -2,7 +2,7 @@
 
 body {
   background-color: #F1ECDB;
-  font-family: 'Montserrat', sans-serif;
+  font-family: Georgia, serif;
 }
 
 .well {
@@ -61,17 +61,18 @@ h2 {
 
 #into {
   font-weight:bold;
-  font-size:50px;
+  font-size:40px;
   text-align:center;
   border:20px;
 }
 
-#text{
+h5{
   font-size:25px;
   text-align:left;
   font-family:garamond;
-  margin: 10px 50px 75px;
+  margin: 10px 100px 75px;
   padding: 20px;
+  line-height:1.5;
 }
 
 label {
@@ -81,4 +82,39 @@ label {
 
 p{
   font-size:16px;
+}
+
+.aboutusimg {
+  display:block;
+  width:130px;
+  border-radius:20px;
+}
+
+#right {
+  margin-left: 0px;
+  margin-right: auto;
+}
+#left{
+  margin-left: auto;
+  margin-right: 0px;
+}
+
+.aboutusimg:hover{
+  transform: scale(1.2, 1.2);
+  -ms-transform: scale(1.2, 1.2);
+  -webkit-transform: scale(1.2, 1.2);
+  transition: 0.6s ease-out;   
+}
+
+h6{
+  font-size:20px;
+  text-align:center;
+  font-family:comic sans ms;
+  margin: 30px 100px 75px;
+  padding: 20px;
+  line-height:2;
+}
+
+#about{
+  font-family:comic sans ms;
 }

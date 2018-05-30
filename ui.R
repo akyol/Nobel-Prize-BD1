@@ -28,13 +28,13 @@ shinyUI(navbarPage(
       fluidRow(
         tags$h3("")
       ),
-
+      br(),
       fluidRow(
         tags$h3(id = "into", "Introduction")
       ),
-      br(),
+      
       fluidRow(
-        tags$h5(id = "text", HTML("Our project focuses on analyzing data
+        tags$h5( HTML("Our project focuses on analyzing data
                       about Nobel Prize winners over the years. Some 
                       target audiences who might look at the visualizations 
                       we create could be current scholars who are curious about
@@ -64,98 +64,65 @@ shinyUI(navbarPage(
     )
   ),
   tabPanel(
-    "Map",
-    titlePanel("Map of Recipients' Birthplaces"),
-    fluidRow(
-      column(12,
-             withBarsUI(plotlyOutput("map"))
-             )
-    ),
-    hr(),
-    fluidRow(
-      column(4,
-             selectInput(
-                 "professor",
-                 label = "Professor",
-                 choices = list(
-                   "Yes" = "yes",
-                   "No" = "no",
-                   "N/A" = "na"
-                 ),
-                 selected = "na"
-               )
-             ),
-      column(4,
-             selectInput(
-                 "gender_map",
-                 label = "Gender",
-                 choices = list(
-                   "Male" = "male",
-                   "Female" = "female",
-                   "N/A" = "na"
-                 ),
-                 selected = "na"
-               )
-             ),
-      column(4,
-             selectInput(
-                 "country",
-                 label = "Country",
-                 choices = filter_country,
-                 selected = "na"
-               )
-             )
-      ),
-      fluidRow(
-        tags$div(
-          class = "summary", checked = NA,
-          tags$p("The visual above lets users view the distribution of laureate
-                 winners across a world map and by choice a specific country.
-                 The visual can also be filtered by whether or not the laureate
-                 is a professor and if they are a man or woman. Users can see
-                 the uneven distribution of")
-          )
-      )
-    ),
-    # sidebarLayout(
-    #   sidebarPanel(
-    #     selectInput(
-    #       "professor",
-    #       label = "Professor",
-    #       choices = list(
-    #         "Yes" = "yes",
-    #         "No" = "no",
-    #         "N/A" = "na"
-    #       ),
-    #       selected = "na"
-    #     ),
-    #     selectInput(
-    #       "gender_map",
-    #       label = "Gender",
-    #       choices = list(
-    #         "Male" = "male",
-    #         "Female" = "female",
-    #         "N/A" = "na"
-    #       ),
-    #       selected = "na"
-    #     ),
-    #     selectInput(
-    #       "country",
-    #       label = "Country",
-    #       choices = filter_country,
-    #       selected = "na"
-    #     )
-    #   ),
-    #   mainPanel(
-    #     withBarsUI(plotlyOutput("map"))
-    #   )
-    
-  tabPanel(
     "Search",
     titlePanel("Search"),
     fluidRow(
       column(12,
              dataTableOutput("search")
+      )
+    )
+  ),
+  tabPanel(
+    "Map",
+    titlePanel("Map of Recipients' Birthplaces"),
+    fluidRow(
+      column(12,
+             withBarsUI(plotlyOutput("map"))
+      )
+    ),
+    hr(),
+    fluidRow(
+      column(4,
+             selectInput(
+               "professor",
+               label = "Professor",
+               choices = list(
+                 "Yes" = "yes",
+                 "No" = "no",
+                 "N/A" = "na"
+               ),
+               selected = "na"
+             )
+      ),
+      column(4,
+             selectInput(
+               "gender_map",
+               label = "Gender",
+               choices = list(
+                 "Male" = "male",
+                 "Female" = "female",
+                 "N/A" = "na"
+               ),
+               selected = "na"
+             )
+      ),
+      column(4,
+             selectInput(
+               "country",
+               label = "Country",
+               choices = filter_country,
+               selected = "na"
+             )
+      )
+    ),
+    fluidRow(
+      tags$div(
+        class = "summary", checked = NA,
+        tags$p("The visual above lets users view the distribution of laureate
+               winners across a world map and by choice a specific country.
+               The visual can also be filtered by whether or not the laureate
+               is a professor and if they are a man or woman. Users can see
+               the uneven distribution of")
       )
     )
   ),
@@ -245,6 +212,33 @@ shinyUI(navbarPage(
   ),
   tabPanel(
     "About Us",
-    titlePanel("About US")
+    titlePanel("About US"),
+    br(),
+    br(),
+    fluidRow(
+      column(6, 
+             tags$img(class = "aboutusimg", id = "left", src = "Jessica.jpg")),
+      column(6,
+              tags$img(class = "aboutusimg", id = "right", src = "Yixin.jpg"))
+    ),
+    br(),
+    fluidRow(
+      column(6, 
+             tags$img(class = "aboutusimg", id = "left", src = "Sammie.jpg")),
+      column(6,
+             tags$img(class = "aboutusimg", id = "right", src = "Abe.jpg"))
+    ),
+    br(),
+    fluidRow(
+      tags$div(
+        class = "summary", checked = NA,
+        tags$h6(HTML("Hello! Welcome to our Nobel Prize Project. It was created by <b>Jessica,
+                Yixin, Samantha, and Abraham. </b></br> We created this for our final for INFO 201,
+                and we hoped you learned a lot of new information, especially since many
+                 people don't really think about the Nobel Prize laureates in their daily 
+                lives. Who knows? Maybe one of these random facts will stick in your 
+                brain, and help you win if you're ever on Jeopardy someday."))
+        )
+    )
   )
 ))
