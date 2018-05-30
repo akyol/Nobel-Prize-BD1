@@ -32,8 +32,18 @@ build_bar <- function(gender_input, decade_input){
     x = prize_count$category,
     y = prize_count$num,
     name = "Number of Prizes",
-    type = "bar"
-  )
+    type = "bar",
+    marker = list(color = c ("rgb(226, 156, 153)",
+                             "rgb(191, 191, 191)",
+                             "rgb(198, 182, 220)",
+                             "rgb(194, 172, 166)",
+                             "rgb(233, 191, 223)",
+                             "rgb(170, 206, 159)"))
+    ) %>% 
+    layout (title = "Number of Recipients per Prize",
+            xaxis = list(title = "Category"),
+            yaxis = list(title = "Number of Recipients"))  
+    
 }
 
 #build_bar("male", 1950)
