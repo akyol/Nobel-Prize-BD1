@@ -19,7 +19,6 @@ filter_country <- setNames(
                     filter_country$bornCountry)
 filter_country$"N/A" <- "na"
 
-
 shinyUI(navbarPage(
   theme = "styles.css",
   "Nobel Prize",
