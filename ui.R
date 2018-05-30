@@ -66,37 +66,47 @@ shinyUI(navbarPage(
   tabPanel(
     "Map",
     titlePanel("Map of Recipients' Birthplaces"),
-    sidebarLayout(
-      sidebarPanel(
-        selectInput(
-          "professor",
-          label = "Professor",
-          choices = list(
-            "Yes" = "yes",
-            "No" = "no",
-            "N/A" = "na"
-          ),
-          selected = "na"
-        ),
-        selectInput(
-          "gender_map",
-          label = "Gender",
-          choices = list(
-            "Male" = "male",
-            "Female" = "female",
-            "N/A" = "na"
-          ),
-          selected = "na"
-        ),
-        selectInput(
-          "country",
-          label = "Country",
-          choices = filter_country,
-          selected = "na"
-        )
+    fluidRow(
+      column(12,
+             withBarsUI(plotlyOutput("map"))
+             )
+    ),
+    hr(),
+    fluidRow(
+      column(4,
+             selectInput(
+                 "professor",
+                 label = "Professor",
+                 choices = list(
+                   "Yes" = "yes",
+                   "No" = "no",
+                   "N/A" = "na"
+                 ),
+                 selected = "na"
+               )
+             ),
+      column(4,
+             selectInput(
+                 "gender_map",
+                 label = "Gender",
+                 choices = list(
+                   "Male" = "male",
+                   "Female" = "female",
+                   "N/A" = "na"
+                 ),
+                 selected = "na"
+               )
+             ),
+      column(4,
+             selectInput(
+                 "country",
+                 label = "Country",
+                 choices = filter_country,
+                 selected = "na"
+               )
+             )
       ),
-      mainPanel(
-        withBarsUI(plotlyOutput("map")),
+      fluidRow(
         tags$div(
           class = "summary", checked = NA,
           tags$p("The visual above lets users view the distribution of laureate
@@ -104,10 +114,42 @@ shinyUI(navbarPage(
                  The visual can also be filtered by whether or not the laureate
                  is a professor and if they are a man or woman. Users can see
                  the uneven distribution of")
-        )
+          )
       )
-    )
-  ),
+    ),
+    # sidebarLayout(
+    #   sidebarPanel(
+    #     selectInput(
+    #       "professor",
+    #       label = "Professor",
+    #       choices = list(
+    #         "Yes" = "yes",
+    #         "No" = "no",
+    #         "N/A" = "na"
+    #       ),
+    #       selected = "na"
+    #     ),
+    #     selectInput(
+    #       "gender_map",
+    #       label = "Gender",
+    #       choices = list(
+    #         "Male" = "male",
+    #         "Female" = "female",
+    #         "N/A" = "na"
+    #       ),
+    #       selected = "na"
+    #     ),
+    #     selectInput(
+    #       "country",
+    #       label = "Country",
+    #       choices = filter_country,
+    #       selected = "na"
+    #     )
+    #   ),
+    #   mainPanel(
+    #     withBarsUI(plotlyOutput("map"))
+    #   )
+    
   tabPanel(
     "Search",
     titlePanel("Search"),
@@ -144,7 +186,25 @@ shinyUI(navbarPage(
         )
       ),
       mainPanel(
-        plotlyOutput("bar")
+        plotlyOutput("bar"),
+        tags$div(
+          class = "summary", checked = NA,
+          br(),
+          tags$p("These barplots are a display of the Prize Catergory
+                  distribution over the decades that the Nobel Prize has
+                  has been in existance. The overall data will change when
+                  adjusting the decades that the user wants to focus on, and 
+                  if they want to change the gender/organization that wins.
+                  Earlier in the decades, some of the prizes were not in 
+                  existance, so they are not represented by the plot shown.
+                  Also, one of the biggest takeaways from this specific graph
+                  is the huge difference between number of male and female
+                  winners. Overall, males across the board have won at least 100
+                  prizes in each catergory, while females are only represented 
+                  by a range of 2 to 16 individuals in each of the catergories.
+                  Another thing to note is that organizations have only been 
+                  been the recipients of the Peace Prize.")
+        )
       )
     )
   ),
