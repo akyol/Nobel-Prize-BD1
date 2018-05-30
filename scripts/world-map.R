@@ -127,6 +127,7 @@ build_map <- function(dataset, professor_var, gender_var, country_var) {
         "country.name"
       ))
 
+    # filtered data that combines latitude and longitude data
     city_geo <- geolocation %>%
       filter(bornCity %in% filter_compare$bornCity) %>%
       select(lat, lng)
